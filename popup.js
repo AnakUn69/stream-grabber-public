@@ -39,6 +39,12 @@ async function init() {
     );
 }
 
+function getQualityLabel(q) {
+    if (q === '720') return '<span class="quality-badge">HD</span>';
+    if (q === '1080') return '<span class="quality-badge">FullHD</span>';
+    return `${q}p`;
+}
+
 function render(data) {
     content.innerHTML = `<strong>${data.title}</strong><hr />`;
 
@@ -53,23 +59,26 @@ function render(data) {
         const div = document.createElement("div");
         div.className = "item";
 
+        const label = getQualityLabel(quality);
+
         // Copy Button
         const btnCopy = document.createElement("button");
-        btnCopy.textContent = `Kopírovat ${quality}p`;
+        btnCopy.innerHTML = `Kopírovat ${label}`;
         btnCopy.onclick = async () => {
             await navigator.clipboard.writeText(url);
+            const originalHTML = btnCopy.innerHTML;
             btnCopy.textContent = "Zkopírováno ✓";
             btnCopy.classList.add("copied");
 
             setTimeout(() => {
-                btnCopy.textContent = `Kopírovat ${quality}p`;
+                btnCopy.innerHTML = originalHTML;
                 btnCopy.classList.remove("copied");
             }, 1500);
         };
 
         // W2G Button
         const btnW2G = document.createElement("button");
-        btnW2G.textContent = `W2G`;
+        btnW2G.innerHTML = `W2G ${label}`;
         btnW2G.className = "secondary";
         btnW2G.title = "Otevřít ve Watch2Gether";
         btnW2G.onclick = () => openW2G(url);
@@ -81,40 +90,16 @@ function render(data) {
 }
 
 async function openW2G(videoUrl) {
-    const storage = await chrome.storage.local.get("w2g_api_key");
-    const apiKey = storage.w2g_api_key;
-
-    if (!apiKey) {
-        alert("Prosím, vložte nejdříve W2G API klíč v nastavení (ikona ozubeného kola).");
-        settingsDiv.classList.add("visible");
-        return;
-    }
-
-    try {
-        const response = await fetch("https://api.w2g.tv/rooms/create.json", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "w2g_api_key": apiKey,
-                "share": videoUrl,
-                "bg_color": "#020617",
-                "bg_opacity": "100"
-            })
-        });
-
-        const data = await response.json();
-        if (data.streamkey) {
-            chrome.tabs.create({ url: `https://w2g.tv/rooms/${data.streamkey}` });
-        } else {
-            alert("Chyba při vytváření roomky. Zkontrolujte API klíč.");
+    chrome.runtime.sendMessage({ type: "CREATE_W2G_ROOM", videoUrl }, (res) => {
+        if (res?.error) {
+            if (res.error.includes("klíč")) {
+                alert(res.error);
+                settingsDiv.classList.add("visible");
+            } else {
+                alert(res.error);
+            }
         }
-    } catch (err) {
-        console.error("W2G Error:", err);
-        alert("Chyba při komunikaci s W2G API.");
-    }
+    });
 }
 
 init();

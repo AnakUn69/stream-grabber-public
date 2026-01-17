@@ -20,6 +20,19 @@
         "https://api.hellspy.to/*",
         "https://api.w2g.tv/*"
     ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://hellspy.to/video/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "content.css"
+            ]
+        }
+    ],
     "icons": {
         "16": "icons/icon.png",
         "48": "icons/icon.png",

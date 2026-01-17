@@ -9,6 +9,7 @@
 ## ✨ Klíčové funkce
 
 - **Automatická detekce**: Okamžitě najde všechny dostupné kvality streamu na stránce.
+- **In-Page Integrace**: Přímo na stránce videa uvidíte nová tlačítka, nemusíte ani otevírat popup!
 - **Copy-and-Go**: Jedním kliknutím zkopírujete odkaz v požadované kvalitě do schránky.
 - **W2G Integrace**: Automatické vytvoření místnosti na [Watch2Gether](https://w2g.tv) a vložení streamu.
 - **Moderní UI**: Temný, přehledný a responzivní design inspirovaný moderními SaaS aplikacemi.
