@@ -81,8 +81,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 // Detect navigation changes (for SPAs or same-tab navigation)
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    // Only trigger on complete to avoid double-init with loading status
     if (changeInfo.status === 'complete' && tab.url && tab.url.includes('hellspy.to/video/')) {
-        chrome.tabs.sendMessage(tabId, { type: "RE_INIT" }).catch(() => {
+        chrome.tabs.sendMessage(tabId, { type: "RE_INIT", url: tab.url }).catch(() => {
             // Content script might not be injected yet or context invalidated, ignore
         });
     }

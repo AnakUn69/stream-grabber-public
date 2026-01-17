@@ -1,17 +1,33 @@
-function init() {
-    const controls = document.querySelector('.controls');
-    if (!controls) {
-        // Retry if controls not found yet (some pages load dynamically)
-        setTimeout(init, 500);
-        return;
-    }
+let isInjecting = false;
+let lastUrl = '';
 
-    if (document.getElementById('grabber-injected')) return;
+function init(force = false) {
+    const currentUrl = window.location.href;
+
+    // Skip if already injecting or if not on a video page
+    if (isInjecting) return;
+    if (!currentUrl.includes('/video/')) return;
+
+    // Skip if already processed this URL (unless forced)
+    if (!force && currentUrl === lastUrl && document.getElementById('grabber-injected')) return;
+
+    const controls = document.querySelector('.controls');
+    if (!controls) return;
+
+    isInjecting = true;
+    lastUrl = currentUrl;
 
     chrome.runtime.sendMessage(
-        { type: "FETCH_HELLSPY", url: window.location.href },
+        { type: "FETCH_HELLSPY", url: currentUrl },
         (res) => {
+            isInjecting = false;
+
             if (!res || res.error) return;
+
+            // Clean up any existing instances to avoid duplicates
+            const existing = document.getElementById('grabber-injected');
+            if (existing) existing.remove();
+
             injectButtons(res);
         }
     );
@@ -25,6 +41,8 @@ function getQualityLabel(q) {
 
 function injectButtons(data) {
     const controls = document.querySelector('.controls');
+    if (!controls) return;
+
     const container = document.createElement('div');
     container.id = 'grabber-injected';
     container.className = 'grabber-container';
@@ -36,8 +54,6 @@ function injectButtons(data) {
     container.appendChild(header);
 
     const conversions = data.conversions || {};
-
-    // Sort qualities descending
     const qualities = Object.keys(conversions).sort((a, b) => parseInt(b) - parseInt(a));
 
     if (qualities.length === 0) return;
@@ -70,9 +86,7 @@ function injectButtons(data) {
         btnW2G.onclick = (e) => {
             e.preventDefault();
             chrome.runtime.sendMessage({ type: "CREATE_W2G_ROOM", videoUrl: url }, (res) => {
-                if (res?.error) {
-                    alert(res.error);
-                }
+                if (res?.error) alert(res.error);
             });
         };
 
@@ -84,16 +98,24 @@ function injectButtons(data) {
     controls.prepend(container);
 }
 
-// Start Initialization
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
+// Watch for DOM changes to detect when .controls appears
+const observer = new MutationObserver(() => {
+    if (document.querySelector('.controls') && !document.getElementById('grabber-injected')) {
+        init();
+    }
+});
 
-// Listen for navigation changes from background script
+observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+});
+
+// Initial run
+init();
+
+// Handle messages from background (SPA navigation fallback)
 chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === "RE_INIT") {
-        init();
+        init(true); // Force re-init on navigation message
     }
 });
