@@ -2,7 +2,9 @@
 
 **Stream Grabber** je elegantní rozšíření pro prohlížeč Chrome, které automaticky detekuje a extrahuje přímé streamovací odkazy z webu `hellspy.to`. Nabízí bleskové kopírování odkazů a unikátní integraci s **Watch2Gether** pro okamžité společné sledování.
 
-![UI Preview](icons/icon.png) *(Poznámka: Zde můžete doplnit screenshot popupu)*
+<p align="center">
+  <img src="icons/icon.png" alt="UI Preview" width="128">
+</p>
 
 ## ✨ Klíčové funkce
 
