@@ -82,8 +82,13 @@
             align-items: stretch;
         }
 
+        .item {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
         .item button {
-            all: unset;
             cursor: pointer;
             padding: 10px 12px;
             border-radius: 999px;
@@ -95,6 +100,20 @@
             text-align: center;
             transition: transform 0.05s ease, box-shadow 0.1s ease;
             margin: 5px;
+            border: none;
+            flex: 1;
+        }
+
+        .item button.secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--muted);
+        }
+
+        .item button.secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: none;
         }
 
         .item button:hover {
@@ -105,6 +124,67 @@
         .item button.copied {
             background: var(--success);
             color: #022c22;
+        }
+
+        .settings-toggle {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 16px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .settings-toggle:hover {
+            opacity: 1;
+        }
+
+        #settings {
+            display: none;
+            padding: 12px;
+            background: var(--card);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        #settings.visible {
+            display: block;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .input-group label {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .input-group input {
+            background: var(--bg);
+            border: 1px solid #334155;
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .btn-small {
+            background: var(--accent);
+            color: #020617;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            width: 100%;
         }
 
         .loading {
@@ -127,7 +207,16 @@
     <div class="popup">
         <header>
             <h1>🎬 Stream Grabber</h1>
+            <button id="toggleSettings" class="settings-toggle" title="Nastavení">⚙️</button>
         </header>
+
+        <div id="settings">
+            <div class="input-group">
+                <label>W2G API Key</label>
+                <input type="text" id="apiKey" placeholder="Vložte API klíč..." />
+            </div>
+            <button id="saveSettings" class="btn-small">Uložit</button>
+        </div>
 
         <div class="card">
             <div id="content" class="loading">Načítám streamy…</div>

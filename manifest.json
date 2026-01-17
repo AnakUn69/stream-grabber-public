@@ -13,10 +13,12 @@
     "permissions": [
         "activeTab",
         "tabs",
-        "clipboardWrite"
+        "clipboardWrite",
+        "storage"
     ],
     "host_permissions": [
-        "https://api.hellspy.to/*"
+        "https://api.hellspy.to/*",
+        "https://api.w2g.tv/*"
     ],
     "icons": {
         "16": "icons/icon.png",
