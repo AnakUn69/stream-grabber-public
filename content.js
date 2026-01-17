@@ -1,3 +1,4 @@
+const W2G_ICON = `<img src="${chrome.runtime.getURL('icons/w2g.svg')}" style="width: 60px; height: auto; display: block; margin: auto;" alt="W2G">`;
 let isInjecting = false;
 let lastUrl = '';
 
@@ -36,7 +37,7 @@ function init(force = false) {
 function getQualityLabel(q) {
     if (q === '720') return '<span class="grabber-badge">HD</span>';
     if (q === '1080') return '<span class="grabber-badge">FullHD</span>';
-    return `${q}p`;
+    return `<span class="grabber-badge">${q}p</span>`;
 }
 
 function injectButtons(data) {
@@ -64,25 +65,16 @@ function injectButtons(data) {
         const row = document.createElement('div');
         row.className = 'grabber-row';
 
-        // Copy Button
-        const btnCopy = document.createElement('button');
-        btnCopy.className = 'grabber-btn grabber-btn-copy';
-        btnCopy.innerHTML = `Kopírovat ${label}`;
-        btnCopy.onclick = (e) => {
-            e.preventDefault();
-            navigator.clipboard.writeText(url);
-            btnCopy.innerHTML = '✅ Zkopírováno';
-            btnCopy.classList.add('success');
-            setTimeout(() => {
-                btnCopy.innerHTML = `Kopírovat ${label}`;
-                btnCopy.classList.remove('success');
-            }, 2000);
-        };
+        // Quality Badge
+        const badgeWrapper = document.createElement('div');
+        badgeWrapper.className = 'grabber-quality-label';
+        badgeWrapper.innerHTML = label;
 
         // W2G Button
         const btnW2G = document.createElement('button');
         btnW2G.className = 'grabber-btn grabber-btn-w2g';
-        btnW2G.innerHTML = `W2G ${label}`;
+        btnW2G.innerHTML = W2G_ICON;
+        btnW2G.title = "Otevřít ve Watch2Gether";
         btnW2G.onclick = (e) => {
             e.preventDefault();
             chrome.runtime.sendMessage({ type: "CREATE_W2G_ROOM", videoUrl: url }, (res) => {
@@ -90,8 +82,24 @@ function injectButtons(data) {
             });
         };
 
-        row.appendChild(btnCopy);
+        // Copy Button
+        const btnCopy = document.createElement('button');
+        btnCopy.className = 'grabber-btn grabber-btn-copy';
+        btnCopy.innerHTML = `Kopírovat`;
+        btnCopy.onclick = (e) => {
+            e.preventDefault();
+            navigator.clipboard.writeText(url);
+            btnCopy.innerHTML = 'Zkopírováno';
+            btnCopy.classList.add('success');
+            setTimeout(() => {
+                btnCopy.innerHTML = `Kopírovat`;
+                btnCopy.classList.remove('success');
+            }, 2000);
+        };
+
+        row.appendChild(badgeWrapper);
         row.appendChild(btnW2G);
+        row.appendChild(btnCopy);
         container.appendChild(row);
     });
 

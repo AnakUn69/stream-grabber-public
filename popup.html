@@ -23,7 +23,7 @@
         body {
             margin: 0;
             padding: 0;
-            width: 360px;
+            width: 400px;
             background: transparent;
         }
 
@@ -85,12 +85,20 @@
         .item {
             display: flex;
             gap: 5px;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .quality-label {
+            min-width: 60px;
+            text-align: left;
         }
 
         .item button {
             cursor: pointer;
-            padding: 10px 12px;
+            height: 38px;
+            padding: 0 12px;
             border-radius: 999px;
             /* pill button */
             background: linear-gradient(135deg, var(--accent), var(--accent-hover));
@@ -99,15 +107,27 @@
             font-weight: 600;
             text-align: center;
             transition: transform 0.05s ease, box-shadow 0.1s ease;
-            margin: 5px;
+            margin: 0;
             border: none;
             flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .item button.secondary {
             background: var(--card);
             color: var(--text);
             border: 1px solid var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .w2g-btn-icon svg {
+            width: 20px;
+            height: 20px;
+            display: block;
         }
 
         .item button.secondary:hover {

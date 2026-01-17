@@ -1,3 +1,4 @@
+const W2G_ICON = `<img src="icons/w2g.svg" style="width: 50px; height: auto; display: block; margin: auto;" alt="W2G">`;
 const content = document.getElementById("content");
 const settingsDiv = document.getElementById("settings");
 const apiKeyInput = document.getElementById("apiKey");
@@ -42,7 +43,7 @@ async function init() {
 function getQualityLabel(q) {
     if (q === '720') return '<span class="quality-badge">HD</span>';
     if (q === '1080') return '<span class="quality-badge">FullHD</span>';
-    return `${q}p`;
+    return `<span class="quality-badge">${q}p</span>`;
 }
 
 function render(data) {
@@ -61,9 +62,20 @@ function render(data) {
 
         const label = getQualityLabel(quality);
 
+        const badgeDiv = document.createElement("div");
+        badgeDiv.className = "quality-label";
+        badgeDiv.innerHTML = label;
+
+        // W2G Button
+        const btnW2G = document.createElement("button");
+        btnW2G.innerHTML = W2G_ICON;
+        btnW2G.className = "secondary w2g-btn-icon";
+        btnW2G.title = "Otevřít ve Watch2Gether";
+        btnW2G.onclick = () => openW2G(url);
+
         // Copy Button
         const btnCopy = document.createElement("button");
-        btnCopy.innerHTML = `Kopírovat ${label}`;
+        btnCopy.innerHTML = `Kopírovat`;
         btnCopy.onclick = async () => {
             await navigator.clipboard.writeText(url);
             const originalHTML = btnCopy.innerHTML;
@@ -76,15 +88,9 @@ function render(data) {
             }, 1500);
         };
 
-        // W2G Button
-        const btnW2G = document.createElement("button");
-        btnW2G.innerHTML = `W2G ${label}`;
-        btnW2G.className = "secondary";
-        btnW2G.title = "Otevřít ve Watch2Gether";
-        btnW2G.onclick = () => openW2G(url);
-
-        div.appendChild(btnCopy);
+        div.appendChild(badgeDiv);
         div.appendChild(btnW2G);
+        div.appendChild(btnCopy);
         content.appendChild(div);
     }
 }
