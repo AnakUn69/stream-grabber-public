@@ -40,4 +40,4 @@ Nyní se u každého nalezeného streamu zobrazí tlačítko **W2G**, které rov
 
 ## 📜 Autor
 
-Vytvořil **Vagis** pro komunitu hellspy.to
+Vytvořil **Vagis**
