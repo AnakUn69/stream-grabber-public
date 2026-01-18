@@ -1,4 +1,6 @@
 const W2G_ICON = `<img src="${chrome.runtime.getURL('icons/w2g.svg')}" style="width: 60px; height: auto; display: block; margin: auto;" alt="W2G">`;
+const CLAPPER_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="grabber-header-icon"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>`;
+const COPY_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="grabber-btn-icon"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><path d="M16 4h2a2 2 0 0 1 2 2v4"/><path d="M21 14H11"/><path d="m15 10-4 4 4 4"/></svg>`;
 let isInjecting = false;
 let lastUrl = '';
 
@@ -51,7 +53,7 @@ function injectButtons(data) {
     // Header
     const header = document.createElement('div');
     header.className = 'grabber-header';
-    header.innerHTML = '<span>🎬 Stream Grabber</span>';
+    header.innerHTML = `${CLAPPER_ICON} <span>Stream Grabber</span>`;
     container.appendChild(header);
 
     const conversions = data.conversions || {};
@@ -85,14 +87,14 @@ function injectButtons(data) {
         // Copy Button
         const btnCopy = document.createElement('button');
         btnCopy.className = 'grabber-btn grabber-btn-copy';
-        btnCopy.innerHTML = `Kopírovat`;
+        btnCopy.innerHTML = `${COPY_ICON} Kopírovat`;
         btnCopy.onclick = (e) => {
             e.preventDefault();
             navigator.clipboard.writeText(url);
-            btnCopy.innerHTML = 'Zkopírováno';
+            btnCopy.innerHTML = 'Zkopírováno ✓';
             btnCopy.classList.add('success');
             setTimeout(() => {
-                btnCopy.innerHTML = `Kopírovat`;
+                btnCopy.innerHTML = `${COPY_ICON} Kopírovat`;
                 btnCopy.classList.remove('success');
             }, 2000);
         };

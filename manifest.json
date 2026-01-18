@@ -41,7 +41,10 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "icons/w2g.svg"
+                "icons/w2g.svg",
+                "icons/clapperboard.svg",
+                "icons/settings.svg",
+                "icons/clipboard-copy.svg"
             ],
             "matches": [
                 "https://hellspy.to/*"

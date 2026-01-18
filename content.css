@@ -11,7 +11,7 @@
 .grabber-container {
     display: flex;
     flex-direction: column;
-    width: 360px;
+    width: 400px;
     gap: 12px;
     margin-bottom: 24px;
     padding: 16px;
@@ -34,17 +34,29 @@
 
 .grabber-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    padding-bottom: 4px;
+    gap: 8px;
+    padding-bottom: 8px;
 }
 
 .grabber-header span {
     font-size: 13px;
     font-weight: 700;
-    color: black;
+    color: #334155;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+}
+
+.grabber-header-icon {
+    width: 20px;
+    height: 20px;
+    color: #334155;
+}
+
+.grabber-btn-icon {
+    width: 16px;
+    height: 16px;
 }
 
 .grabber-row {
