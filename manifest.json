@@ -1,0 +1,54 @@
+{
+    "manifest_version": 3,
+    "name": "Stream Grabber",
+    "version": "0.1.0",
+    "description": "Grab stream links from hellspy.to video tags",
+    "author": "Vagis",
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "clipboardWrite",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://api.hellspy.to/*",
+        "https://api.w2g.tv/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://hellspy.to/video/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "content.css"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "icons/icon.png",
+        "48": "icons/icon.png",
+        "128": "icons/icon.png"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "icons/w2g.svg",
+                "icons/clapperboard.svg",
+                "icons/settings.svg",
+                "icons/clipboard-copy.svg"
+            ],
+            "matches": [
+                "https://hellspy.to/*"
+            ]
+        }
+    ]
+}

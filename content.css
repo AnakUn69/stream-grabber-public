@@ -1,0 +1,130 @@
+:root {
+    --g-bg: rgba(15, 23, 42, 0.75);
+    --g-border: rgba(56, 189, 248, 0.3);
+    --g-accent: #38bdf8;
+    --g-accent-hover: #0ea5e9;
+    --g-text: #e5e7eb;
+    --g-success: #22c55e;
+}
+
+.grabber-container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: grabberFadeIn 0.4s ease-out;
+}
+
+@keyframes grabberFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.grabber-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 8px;
+}
+
+.grabber-header span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.grabber-header-icon {
+    width: 20px;
+    height: 20px;
+    color: #334155;
+}
+
+.grabber-btn-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.grabber-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grabber-quality-label {
+    min-width: 65px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.grabber-btn {
+    flex: 1;
+    height: 42px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: white;
+}
+
+.grabber-btn-copy {
+    background: rgba(30, 41, 59, 0.6);
+    color: white;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+.grabber-btn-copy:hover {
+    transform: translateY(-2px);
+}
+
+.grabber-btn-copy.success {
+    background: var(--g-success);
+    color: #022c22;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.grabber-btn-w2g {
+    background: rgba(30, 41, 59, 0.6);
+    color: white;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+.grabber-btn-w2g:hover {
+    transform: translateY(-2px);
+}
+
+.grabber-btn:active {
+    transform: translateY(0);
+}
+
+.grabber-badge {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 900;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+}

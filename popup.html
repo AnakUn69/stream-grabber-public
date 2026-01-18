@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 400px;
+            background: transparent;
+        }
+
+        body {
+            padding: 8px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            border-radius: 14px;
+        }
+
+        .popup {
+            background: linear-gradient(180deg, #020617, #020617);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        header h1 {
+            font-size: 16px;
+            margin: 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+
+        .title {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            line-height: 1.35;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .item {
+            display: flex;
+            gap: 5px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .quality-label {
+            min-width: 60px;
+            text-align: left;
+        }
+
+        .item button {
+            cursor: pointer;
+            height: 38px;
+            padding: 0 12px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: #020617;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            transition: transform 0.05s ease, box-shadow 0.1s ease;
+            margin: 0;
+            border: none;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item button.secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .w2g-btn-icon img {
+            width: 100px;
+            height: auto;
+            display: block;
+        }
+
+        .item button.secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: none;
+        }
+
+        .item button:hover {
+            box-shadow: 0 6px 18px rgba(56, 189, 248, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .item button .btn-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+        }
+
+        .header-icon {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        .settings-icon-img {
+            width: 18px;
+            height: 18px;
+            display: block;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .settings-toggle:hover .settings-icon-img {
+            color: white;
+        }
+
+        .item button.copied {
+            background: var(--success);
+            color: #022c22;
+        }
+
+        .quality-badge {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-left: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .settings-toggle {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 16px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .settings-toggle:hover {
+            opacity: 1;
+        }
+
+        #settings {
+            display: none;
+            padding: 12px;
+            background: var(--card);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        #settings.visible {
+            display: block;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .input-group label {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .input-group input {
+            background: var(--bg);
+            border: 1px solid #334155;
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .btn-small {
+            background: var(--accent);
+            color: #020617;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+        }
+
+        .loading {
+            padding: 16px 0;
+            font-size: 13px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="popup">
+        <header>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="header-icon">
+                <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z" />
+                <path d="m6.2 5.3 3.1 3.9" />
+                <path d="m12.4 3.4 3.1 4" />
+                <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+            </svg>
+            <h1>Stream Grabber</h1>
+            <button id="toggleSettings" class="settings-toggle" title="Nastavení">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="settings-icon-img">
+                    <path
+                        d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+            </button>
+        </header>
+
+        <div id="settings">
+            <div class="input-group">
+                <label>W2G API Key</label>
+                <input type="text" id="apiKey" placeholder="Vložte API klíč..." />
+            </div>
+            <button id="saveSettings" class="btn-small">Uložit</button>
+        </div>
+
+        <div class="card">
+            <div id="content" class="loading">Načítám streamy…</div>
+        </div>
+
+        <footer>hellspy.to | made by Vagis</footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
